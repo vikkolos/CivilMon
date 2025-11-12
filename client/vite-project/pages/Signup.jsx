@@ -1,0 +1,111 @@
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+function Signup() {
+  const [userType,setUserType] = useState("citizen")
+  return (
+    <>
+    <div className="w-xl mx-auto p-5 translate-x-10 no-scrollbar">
+        <form action="no-scrollbar">
+          <h2 className="text-3xl font-semibold my-3">Create Account</h2>
+          <span className="mt-2 text-md inline-block my-3">
+            Join our community to report and track local issues
+          </span>
+          <div className="flex gap-5">
+            <button type="button" className={`m-1 px-4 py-0.5 text-center rounded-lg  font-medium pb-1 ${userType=="citizen"?"bg-(--main-color) text-white":"bg-(--but-bg-na)"}`}  onClick={() => setUserType("citizen")}>Citizen</button>
+            <button type="button" className={`m-1 px-4 py-0.5 text-center rounded-lg  font-medium pb-1 ${userType=="representative"?"bg-(--main-color) text-white":"bg-(--but-bg-na)"}`}  onClick={() => setUserType("representative")}>Representative</button>
+            
+          </div>
+          <label htmlFor="nameman" className="block text-md font-medium mt-3">
+            Full name
+          </label>
+          <input
+            type="String"
+            id="nameman"
+            className="w-full border-none rounded px-3 py-2 transition duration-300 max-w-md focus:outline-none placeholder:font-bold placeholder:text-sm focus:ring mt-1.5 bg-[#F1F1F1] focus:ring-(--main-color)"
+            placeholder="Enter your Fullname"
+          />
+          <label htmlFor="mailman" className="block text-md font-medium mt-3 ">
+            Email
+          </label>
+          <input
+            type="email"
+            id="mailman"
+            className="w-full border-none rounded px-3 py-2 transition duration-300 max-w-md placeholder:font-bold placeholder:text-sm focus:outline-none focus:ring mt-1.5 bg-[#F1F1F1] focus:ring-(--main-color)"
+            placeholder="Enter your Email"
+          />
+          <label htmlFor="passman" className="block text-md font-medium mt-3">
+            Password
+          </label>
+          <input
+            type="password"
+            id="passman"
+            className="w-full border-none rounded px-3 py-2 transition duration-300 max-w-md focus:outline-none placeholder:font-bold placeholder:text-sm focus:ring mt-1.5 bg-[#F1F1F1] focus:ring-(--main-color)"
+            placeholder="Create Password"
+          />
+          <label htmlFor="aadharman" className="block text-md font-medium mt-3">
+            Aadhar-Number
+          </label>
+          <input
+            type="password"
+            id="aadharman"
+            className="w-full border-none rounded px-3 py-2 transition duration-300 max-w-md focus:outline-none placeholder:font-bold placeholder:text-sm focus:ring mt-1.5 bg-[#F1F1F1] focus:ring-(--main-color)
+            placeholder:tracking-widest"
+            placeholder="xxxx-xxxx-xxxx"
+          />
+          {(userType=="representative")&&(
+          <>
+            <label htmlFor="aadharman" className="block text-md font-medium mt-3">
+            State
+            </label>
+            <input
+              type="password"
+              id="aadharman"
+              className="w-full border-none rounded px-3 py-2 transition duration-300 max-w-md focus:outline-none placeholder:font-bold placeholder:text-sm focus:ring mt-1.5 bg-[#F1F1F1] focus:ring-(--main-color)"
+              placeholder="Enter State"
+            />
+            <label htmlFor="aadharman" className="block text-md font-medium mt-3">
+            District
+            </label>
+            <input
+              type="password"
+              id="aadharman"
+              className="w-full border-none rounded px-3 py-2 transition duration-300 max-w-md focus:outline-none placeholder:font-bold placeholder:text-sm focus:ring mt-1.5 bg-[#F1F1F1] focus:ring-(--main-color)"
+              placeholder="Enter District"
+            />
+            <label htmlFor="aadharman" className="block text-md font-medium mt-3">
+            Ward-Number
+            </label>
+            <input
+              type="password"
+              id="aadharman"
+              className="w-full border-none rounded px-3 py-2 transition duration-300 max-w-md focus:outline-none placeholder:font-bold placeholder:text-sm focus:ring mt-1.5 bg-[#F1F1F1] focus:ring-(--main-color)"
+              placeholder="Enter Ward-Number"
+            />
+          </> 
+          )
+
+          }
+          <button
+            type="Submit"
+            className="max-w-md w-full rounded-md bg-(--main-color) h-auto py-2 text-white  mt-7 text-center hover:cursor-pointer"
+          >
+            Create Account
+          </button>
+          <div className="flex gap-0.5 items-center mx-auto mt-1">
+            <p className="text-center font-normal text-sm inline-block pl-30 ">
+              Already have an account?
+            </p>
+            <Link
+              to="/Login"
+              className="inline-block hover:text-(--main-color) transition duration-200 "
+            >
+              Login
+            </Link>
+          </div>
+        </form>
+      </div>
+    </>
+  )
+}
+
+export default Signup

@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+ :root{
+    --main-color:#541AA3;
+    --but-bg-na:#BFDFEF
+ }
+ @layer utilities{
+   .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;     /* Firefox */
+    }
+
+ }
