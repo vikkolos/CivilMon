@@ -3,9 +3,9 @@ import { Link,NavLink } from "react-router-dom";
 function Login() {
   return (
     <>
-      <div className="w-xl mx-auto p-5 translate-x-10">
-        <form action="">
-          <h2 className="text-3xl font-semibold my-3">Welcome Back</h2>
+      <div className=" mx-auto p-5 flex justify-center items-center flex-col">
+        <form action="" className=" sm:w-[400px] w-[96%] max-w-[400px] mx-auto">
+          <h2 className=" text-2xl sm:text-3xl font-semibold my-3">Welcome Back</h2>
           <span className="mt-2 text-md inline-block my-3">
             Login to continue reporting and tracking community issues
           </span>
@@ -32,19 +32,17 @@ function Login() {
             className="max-w-md w-full rounded-md bg-(--main-color) h-auto py-2 text-white  mt-7 text-center hover:cursor-pointer"
           >
             Log in
-          </button>
-          <div className="flex gap-0.5 items-center mx-auto mt-1">
-            <p className="text-center font-normal text-sm inline-block pl-30 ">
-              Dont have an account?
-            </p>
-            <Link
-              to="/Signup"
-              className="inline-block hover:text-(--main-color) transition duration-200 "
-            >
-              Sign up
-            </Link>
-          </div>
-        </form>
+          </button>  
+          <p className="text-center text-sm mt-3">
+          Don’t have an account?{" "}
+          <Link
+            to="/Signup"
+            className="text-[--main-color] hover:underline inline-block hover:text-(--main-color) duration-200 transition-all "
+          >
+            Sign up
+          </Link>
+          </p>       
+        </form>        
       </div>
     </>
   );

@@ -4,9 +4,9 @@ function Signup() {
   const [userType,setUserType] = useState("citizen")
   return (
     <>
-    <div className="w-xl mx-auto p-5 translate-x-10 no-scrollbar">
-        <form action="no-scrollbar">
-          <h2 className="text-3xl font-semibold my-3">Create Account</h2>
+    <div className=" mx-auto no-scrollbar flex justify-center items-center p-5 ">
+        <form action="  " className="sm:w-[400px] w-[80%] mx-auto">
+          <h2 className="text-2xl font-semibold my-3 md:text-3xl">Create Account</h2>
           <span className="mt-2 text-md inline-block my-3">
             Join our community to report and track local issues
           </span>
@@ -91,13 +91,13 @@ function Signup() {
           >
             Create Account
           </button>
-          <div className="flex gap-0.5 items-center mx-auto mt-1">
-            <p className="text-center font-normal text-sm inline-block pl-30 ">
+          <div className="flex gap-0.5 items-center mx-auto mt-1 justify-center mb-30">
+            <p className="text-center font-normal text-sm inline-block  ">
               Already have an account?
             </p>
             <Link
               to="/Login"
-              className="inline-block hover:text-(--main-color) transition duration-200 "
+              className="inline-block hover:text-(--main-color) transition duration-200 hover:underline "
             >
               Login
             </Link>

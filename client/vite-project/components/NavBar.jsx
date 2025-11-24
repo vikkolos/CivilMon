@@ -8,14 +8,16 @@ function NavBar() {
   return (
     <>
       <nav className="w-screen  h-13 m-auto flex justify-between px-5">
-        <div className="w-auto  flex  justify-between gap-10 items-center p-2 ml-2 ">
+        <div className="w-auto  flex  justify-between gap-10 items-center md:p-2 md:ml-2 mt-6 md:mt-0">
           <Link to={"/"}>
-            <h1 className="text-2xl font-semibold">CivilWatch</h1>
+            <h1 className=" md:text-2xl text-3xl font-semibold">CivilWatch</h1>
+            
           </Link>
+          {/* <hr className="md:hidden w-full" /> */}
           <NavLink to={"/"} className={({isActive})=>
             isActive
-            ? "text-[#541AA3] font-semibold"
-            : "text-gray-600 hover:text-gray-900"
+            ? "text-[#541AA3] hidden md:flex font-semibold"
+            : "text-gray-600 hidden md:flex hover:text-gray-900"
           }>
             <span className="flex items-center text-md gap-2 pt-1">
               <GoHomeFill size={13}/>
@@ -43,22 +45,24 @@ function NavBar() {
             <>
               <NavLink to={"/Login"} className={({isActive})=>
             isActive
-            ? "text-[#541AA3] font-extrabold bg-[#c9aff1] p-1 px-3.5 rounded-lg pb-[0.4rem] mt-2"
-            : " text-black  hover:text-gray-900 p-1 px-3.5 rounded-lg pb-[0.4rem] mt-2"
+            ? "text-[#541AA3] hidden md:flex font-extrabold bg-[#c9aff1] p-1 px-3.5 rounded-lg pb-[0.4rem] mt-2"
+            : " text-black hidden md:flex hover:text-gray-900 p-1 px-3.5 rounded-lg pb-[0.4rem] mt-2"
             }>
                 <span className="flex items-center font-semibold text-md gap-2 ">
                   Login
                 </span>
               </NavLink>
+
               <NavLink to={"/Signup"} className={({isActive})=>
              isActive
-             ? "text-[#541AA3] font-extrabold bg-[#d6c0f7] p-1 px-3.5 rounded-lg pb-[0.4rem] mt-2 "
-             : " text-black  hover:text-gray-900 p-1 px-3.5 rounded-lg pb-[0.4rem] mt-2 "
+             ? "text-[#541AA3] hidden md:flex font-extrabold bg-[#d6c0f7] p-1 px-3.5 rounded-lg pb-[0.4rem] mt-2 "
+             : " text-black hidden md:flex hover:text-gray-900 p-1 px-3.5 rounded-lg pb-[0.4rem] mt-2 "
             } >
                 <span className="flex items-center font-semibold text-md gap-2 ">
                   Sign up
                 </span>
               </NavLink>
+
             </>
           ) : (
             <></>
