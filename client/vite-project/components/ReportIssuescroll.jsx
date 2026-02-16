@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 import { IoIosArrowBack } from "react-icons/io";
+import { Link } from "react-router-dom";
 function ReportIssuescroll({ cards }) {
   const containerRef = useRef(null);
   const cardRef = useRef(null);
@@ -61,12 +62,16 @@ function ReportIssuescroll({ cards }) {
           className="flex gap-5 overflow-x-auto w-[99%] scroll-smooth no-scrollbar mx-auto"
         >
           {cards.map((card, i) => (
+            <Link to={"/ReportIssue"}>
+
             <div
               key={i}
               ref={i === 0 ? cardRef : null}
               className="min-w-[355px] h-48 bg-(--main-light) rounded-lg flex pl-8 justify-center flex-col "
-            >
-              <div className="bg-[#D2C5E8] rounded-3xl w-12 h-12"></div>
+              >
+              <div className="bg-[#D2C5E8] rounded-3xl w-12 h-12">
+                
+              </div>
               <span className="text-2xl mt-2 font-semibold">
                 {card.count}
               </span>
@@ -74,6 +79,7 @@ function ReportIssuescroll({ cards }) {
                 {card.title}
               </p>
             </div>
+            </Link>
           ))}
         </div>
 

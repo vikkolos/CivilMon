@@ -2,7 +2,7 @@ import React from "react";
 import { Link,NavLink } from "react-router-dom";
 function Login() {
   return (
-    <>
+    <div className="max-w-[1550px] mx-auto">
       <div className=" mx-auto p-5 flex justify-center items-center flex-col">
         <form action="" className=" sm:w-[400px] w-[96%] max-w-[400px] mx-auto">
           <h2 className=" text-2xl sm:text-3xl font-semibold my-3">Welcome Back</h2>
@@ -44,7 +44,7 @@ function Login() {
           </p>       
         </form>        
       </div>
-    </>
+    </div>
   );
 }
 

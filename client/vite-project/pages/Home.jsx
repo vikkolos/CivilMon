@@ -16,7 +16,7 @@ function Home() {
   
   
   return (
-    <div className='p-5 pb-20'>
+    <div className='p-5 pb-20 max-w-[1550px] mx-auto'>
       <div className='w-full text-center '>
         <h1 className='font-bold text-4xl mt-8 font-quant scale-y-120'>Empower Your Community</h1>
         <p className='mt-3 font-[350]'>Report Local Issues, Track Solutions, And Rate Representative Performance</p>

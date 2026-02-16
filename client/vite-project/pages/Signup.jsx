@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 function Signup() {
-  const [userType,setUserType] = useState("citizen")
+  const [userType,setUserType] = useState("citizen");
+  
   return (
     <>
     <div className=" mx-auto no-scrollbar flex justify-center items-center p-5 ">
