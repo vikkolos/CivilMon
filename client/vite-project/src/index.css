@@ -3,9 +3,10 @@
 @import "tailwindcss";
 
  :root{
-    --main-color:#541AA3;
-    --main-light:#E4E4f4;
+    --main-color:#581FA6;
+    --main-light:#F4ECFD;
     --but-bg-na:#BFDFEF;
+    --main-accent:#D7C6ED;
  }
  @theme{
   --font-quant : Quantico, "sans-seri";

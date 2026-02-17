@@ -8,7 +8,7 @@ const representativeSchema = new Schema({
       trim: true,
     },
     email: {
-      type: Stringl,
+      type: String,
       require: true,
       trim: true,
       unique: true,
@@ -38,6 +38,10 @@ const representativeSchema = new Schema({
       type: String,
       require: true,
     },
+    issues:[{
+      type:Schema.Types.ObjectId,
+      ref:"Issue"
+    }]
     
   },{
    timestamps:true

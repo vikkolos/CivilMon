@@ -7,7 +7,7 @@ function NavBar() {
   const [isLogin, setIsLogin] = useState(false);
   return (
     <>
-      <nav className="w-screen  h-13 m-auto flex justify-between px-5">
+      <nav className="w-screen  h-13 m-auto flex justify-between px-5 max-w-[1600px]">
         <div className="w-auto  flex  justify-between gap-10 items-center md:p-2 md:ml-2 mt-6 md:mt-0">
           <Link to={"/"}>
             <h1 className=" md:text-2xl text-[1.5em] font-semibold ">CivilWatch</h1>

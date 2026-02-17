@@ -26,6 +26,10 @@ const userSchema = new Schema({
     require: true,
     match: [/^\d{12}$/, "Aadhaar number must be exactly 12 digits"],
   },
+  issues:[{
+    type:Schema.Types.ObjectId,
+    ref:"Issue"
+  }],
 },{
  timestamps:true
 });
