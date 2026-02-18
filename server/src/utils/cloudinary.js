@@ -22,4 +22,4 @@ import fs from "fs"
         }
     }
 
-    export {uploadOnCloudinary}
+    export default uploadOnCloudinary
