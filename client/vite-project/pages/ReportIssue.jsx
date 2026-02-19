@@ -93,7 +93,7 @@ const handleSubmit = async (e) => {
     formData.images.forEach(file => {
       data.append("images", file);
     });
-    
+    console.log(data)
     const res = await axios.post("http://localhost:3002/api/v1/issues/report",data);
     console.log(res.data)
   }
@@ -211,7 +211,7 @@ const handleSubmit = async (e) => {
                         <p className='text-[0.8em] '>Review your report before submission</p>
                         <div className='flex mt-4 gap-5'>
                             <button type='button ' className='bg-(--main-color) py-2 px-4 rounded-lg text-white text-sm'>Get problems in this area</button>
-                            <button type='button' onSubmit={handleSubmit} className='bg-(--main-color) py-2 px-4 rounded-lg text-white text-sm'>Submit Report</button>                           
+                            <button type='button' onClick={handleSubmit} className='bg-(--main-color) py-2 px-4 rounded-lg text-white text-sm'>Submit Report</button>                           
                         </div>
                   </div>
                   

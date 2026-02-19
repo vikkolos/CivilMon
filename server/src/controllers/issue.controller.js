@@ -12,13 +12,15 @@ const reportIssue = asyncHandler( async (req,res)=>{
     //upload images on cloudinary
     // create issue object
     // return res
-    const{issueType,description,location,severity}= req.body;
-    if(
-        [issueType,description,location,severity].some((field)=>field?.trim()==="")
-    ){
-        throw new ApiError(400,"All fields are required")
-    }
-    console.log( issueType,description,location,severity);
+    console.log("BODY:", req.body);
+    console.log("FILES:", req.files);   
+    // const{issueType,description,location,severity}= req.body;
+    // if(
+    //     [issueType,description,location,severity].some((field)=>field?.trim()==="")
+    // ){
+    //     throw new ApiError(400,"All fields are required")
+    // }
+    // console.log( issueType,description,location,severity);
     
 })
 export {reportIssue }
