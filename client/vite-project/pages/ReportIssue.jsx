@@ -79,20 +79,17 @@ const handleSubmit = async (e) => {
   }
   const data = new FormData();
   try{ 
-
     
-    // Normal fields
     data.append("issueType", formData.issueType);
     data.append("description", formData.description);
     data.append("severity", formData.severity);
     
-    // Nested object (convert to string)
     data.append("location", JSON.stringify(formData.location));
     
-    // Images
     formData.images.forEach(file => {
       data.append("images", file);
     });
+    
     console.log(data)
     const res = await axios.post("http://localhost:3002/api/v1/issues/report",data);
     console.log(res.data)
@@ -117,6 +114,14 @@ const handleSubmit = async (e) => {
     }))
     setImages([...files]);
   }
+
+  const handle = (e)=>{
+    const {name,value}= e.target;
+    setFormData(prev =>({
+      ...prev,
+      [name]:value,
+    }))
+  }
   const handlechange =(e)=>{
     const {name,value} = e.target;
     setFormData(prev=>({
@@ -135,7 +140,7 @@ const handleSubmit = async (e) => {
       <form action="submit " className='max-w-[1400px] md:mx-35 md:mt-10 mx-4 mt-3'>
           <div>
           <h1 className='font-semibold text-md'>Issue Category</h1>
-          <select required value={IssueType} onChange={HandleIssueType} className='w-full border-black bg-[#F2F1F1] px-3 outline-black py-2 rounded-lg mt-2 focus:outline-none '>
+          <select required name='issueType' value={IssueType} onChange={handle} className='w-full border-black bg-[#F2F1F1] px-3 outline-black py-2 rounded-lg mt-2 focus:outline-none '>
             <option value="" defaultChecked>Select Issue Type </option>
             <option value="Road">Road</option>
             <option value="Electricity">Electricity</option>
@@ -169,6 +174,7 @@ const handleSubmit = async (e) => {
                           name='description'
                           placeholder="Describe the issue..."
                           className="w-full h-24 px-3 py-2 rounded-lg  bg-[#F2F1F1] resize-none mt-2 focus:outline-none"
+                          onChange={handle}
                         />
                   </div>
                   <div>

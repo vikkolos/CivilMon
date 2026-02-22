@@ -41,7 +41,11 @@ const representativeSchema = new Schema({
     issues:[{
       type:Schema.Types.ObjectId,
       ref:"Issue"
-    }]
+    }],
+    rating:{
+      type: Number,
+      default:0,
+    }
     
   },{
    timestamps:true

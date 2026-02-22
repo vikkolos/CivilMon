@@ -6,12 +6,12 @@ const generateAccessAndRefereshTokens = async(userId) =>{
     try {
         const user = await User.findById(userId)
         const accessToken = user.generateAccessToken()
-        const refreshtoken = user.generateRefreshToken()
+        const refreshToken = user.generateRefreshToken()
 
-        user.refreshtoken = refreshtoken
+        user.refreshtoken = refreshToken
         await user.save({ validateBeforeSave: false })
 
-        return {accessToken, refreshtoken}
+        return {accessToken, refreshToken}
 
 
     } catch (error) {
@@ -51,7 +51,7 @@ const registerUser = asyncHandler(async (req,res)=>{
 const loginUser = asyncHandler(async (req,res)=>{
     const {email,password} = req.body;
     if(!email || !password){
-        throw new ApiError(400,"emil and passwod are required")
+        throw new ApiError(400,"email and passwod are required")
     }
     const user = await User.findOne({
         $or:[{email}]
@@ -63,7 +63,7 @@ const loginUser = asyncHandler(async (req,res)=>{
     if(!isParrwordValid){
         throw new ApiError(401,"invalid user credentials")
     }
-    const {accessToken,refreshtoken}= await generateAccessAndRefereshTokens(user._id);
+    const {accessToken,refreshToken}= await generateAccessAndRefereshTokens(user._id);
     const loggedInUser = await User.findById(user._id).select("-password -refreshToken")
     const options ={
         httpOnly :true,
