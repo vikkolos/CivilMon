@@ -14,9 +14,10 @@ const reportIssue = asyncHandler( async (req,res)=>{
     // return res
     // console.log("BODY:", req.body.issueType);
     console.log("FILES:", req.files);   
-    const{issueType,description,location,severity}= req.body;
+    const{issueType,description,severity}= req.body;
+    const location = JSON.parse(req.body.location)
     if(
-        [issueType,description,location,severity].some((field)=>field?.trim()==="")
+        [issueType,description,severity].some((field)=>field?.trim()==="")&&location
     ){
         throw new ApiError(400,"All fields are required")
     }
@@ -34,15 +35,66 @@ const reportIssue = asyncHandler( async (req,res)=>{
     }
     let urls =[]
     for(let i= 0;i<imageLocPath.length;i++){ 
-        urls[i] = await uploadOnCloudinary(imageLocPath[i])
+        let resp= await uploadOnCloudinary(imageLocPath[i])
+        urls[i] = resp.url
     }
     console.log(urls)
+    const user= req.user    
     const issue = Issue.create({
         issueType,
         description,
-        severity
+        severity,
+        location,
+        owner:user._id,
+        images:urls
     })
 
+    return res
+    .status(201)
+    .json( new ApiResponse(200,issue,"issue reported successfully"))
     
 })
-export {reportIssue}
+const getResPenIssues = asyncHandler(async(req,res)=>{
+    const user = req.user;
+    let resolved = []
+    let unresolved = []
+
+    for(let i = 0 ; i<user.issue.length;i++){
+       let resp= await Issue.findById(element)
+       if(resp.resolved =="true"){
+        resolved.push(resp)
+       }
+       else{
+        unresolved.push(resp)
+       }
+    }
+     return res.status(200)
+     .json( new ApiResponse (200,{resolvednum:resolved.length,
+    unresolvednum:unresolved.length},"sent the number of  resolved and unresolved"))
+
+})
+
+
+const handleResolvedRating = asyncHandler(async ( req,res )=>{
+    const {id,rating}= req.body;
+    if(!id){
+        throw new ApiError(400,"cant obtain id")
+    }
+    if(!rating||rating>10||rating<1){
+        throw new ApiError(400,"rating not available or rating is more than 10")
+    }
+    const issue = await Issue.findById(id)
+    if(!issue){
+        throw new ApiError(404,"issue is not available")
+    }
+    issue.resolved = true
+    issue.rating = rating
+    await issue.save({validateBeforeSave:false})
+     return res.status(200)
+     .json( new ApiResponse(200,{},"issue set to resolved"))
+
+})
+
+
+
+export {reportIssue,getResPenIssues,handleResolvedRating}

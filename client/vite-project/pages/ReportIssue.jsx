@@ -2,8 +2,10 @@ import React from 'react'
 import { useReducer } from 'react';
 import { useState,useRef } from 'react'
 import axios from "axios"
+import { useNavigate } from "react-router-dom";
 function ReportIssue() {
   const [IssueType,setIssueType] = useState();
+  const navigate = useNavigate()
   const [Location,setLocation] = useState({
     address:"",
     state:"",
@@ -27,7 +29,7 @@ function ReportIssue() {
       wardNumber:"",
       area:"",
     },
-    severity:"low",
+    severity:"Low",
 
   })
   const getCurr = async (lat,lon)=>{
@@ -91,8 +93,22 @@ const handleSubmit = async (e) => {
     });
     
     console.log(data)
-    const res = await axios.post("http://localhost:3002/api/v1/issues/report",data);
+    const res = await axios.post("http://localhost:3002/api/v1/issues/report",data,{withCredentials:true});
     console.log(res.data)
+    setFormData({
+      issueType:"",
+      images:[],
+      description:"",
+      location:{
+        address:"",
+        state:"",
+        district:"",
+        wardNumber:"",
+        area:"",
+      },
+      severity:"Low",
+    })
+    navigate("/")
   }
   catch(err){
     console.error(err)
@@ -117,6 +133,7 @@ const handleSubmit = async (e) => {
 
   const handle = (e)=>{
     const {name,value}= e.target;
+    console.log(name, value);
     setFormData(prev =>({
       ...prev,
       [name]:value,
@@ -210,7 +227,11 @@ const handleSubmit = async (e) => {
                   </div>
                   <div className=''>
                         <h1 className='text-lg font-medium inline-block mt-4'>Severity</h1>
-                        
+                        <div className='flex gap-3 mt-4'>
+                        <button type='button' value="Low" onClick={handle} name='severity' className={`${formData.severity==="Low"?"bg-(--main-color)":"bg-(--main-accent)"} py-2 px-4 rounded-lg text-white text-sm`}>Low</button>
+                        <button type='button' value="Medium" onClick={handle} name='severity' className={`${formData.severity==="Medium"?"bg-(--main-color)":"bg-(--main-accent)"} py-2 px-4 rounded-lg text-white text-sm`}>Medium</button>
+                        <button type='button' value="High" onClick={handle} name='severity' className={`${formData.severity==="High"?"bg-(--main-color)":"bg-(--main-accent)"} py-2 px-4 rounded-lg text-white text-sm`}>High</button>
+                        </div>
                   </div>
                   <div className='bg-(--main-light) p-7 rounded-lg mt-4 '>
                         <h1 className='text-lg font-medium inline-block '>Preview</h1>

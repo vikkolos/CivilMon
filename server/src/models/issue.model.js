@@ -55,7 +55,12 @@ const reportIssue = new Schema({
     resolved:{
         type:Boolean,
         default:false,
-    }
+    },
+    rating: {
+        type: Number,
+        min :1 ,
+        max: [10, " rating must be less than or equal to 10"]
+      }
 },{
     timestamps:true
 })

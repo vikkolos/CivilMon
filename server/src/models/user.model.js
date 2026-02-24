@@ -55,6 +55,7 @@ userSchema.methods.generateRefreshToken =  function(){
     },
     )
 }
+
 userSchema.methods.generateAccessToken =  function(){
     return Jwt.sign({
         _id :this._id,
