@@ -1,10 +1,44 @@
 import React from "react";
 import { Link,NavLink } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
+import useUser from "../src/context/UserContext";
+import { useNavigate } from "react-router-dom";
 function Login() {
+  const [UserData,setUserData] = useState({
+    email:"",
+    password:"",
+  })
+  const{user,setUser,isLoading,setIsLoading}=useUser();
+  const navigate = useNavigate();
+  const handleChange =(e)=>{
+    const {name, value} = e.target
+      setUserData(prev =>({
+        ...prev,
+        [name]:value
+      })) 
+   }
+  const handleSubmit= async (e)=>{
+    e.preventDefault()
+   try {
+     let res = await axios.post("http://localhost:3002/api/v1/users/login",UserData,{withCredentials:true})
+     setUserData({
+      email:"",
+      password:"",
+    })
+    // console.log(res.data)
+    setUser(res.data.data.user)
+    console.log(user)
+
+    navigate("/")
+   } catch (error) {
+    console.log(error)
+   }
+  }
   return (
     <div className="max-w-[1550px] mx-auto">
       <div className=" mx-auto p-5 flex justify-center items-center flex-col">
-        <form action="" className=" sm:w-[400px] w-[96%] max-w-[400px] mx-auto">
+        <form action="" className=" sm:w-[400px] w-[96%] max-w-[400px] mx-auto" onSubmit={handleSubmit}>
           <h2 className=" text-2xl sm:text-3xl font-semibold my-3">Welcome Back</h2>
           <span className="mt-2 text-md inline-block my-3">
             Login to continue reporting and tracking community issues
@@ -17,6 +51,10 @@ function Login() {
             id="mailman"
             className="w-full border-none rounded px-3 py-2 transition duration-300 max-w-md placeholder:font-bold placeholder:text-sm focus:outline-none focus:ring mt-1.5 bg-[#F1F1F1] focus:ring-(--main-color)"
             placeholder="Enter your Email"
+            name="email"
+            onChange={handleChange}
+            value={UserData.email}
+            required
           />
           <label htmlFor="passman" className="block text-md font-medium mt-3">
             Password
@@ -26,6 +64,10 @@ function Login() {
             id="passman"
             className="w-full border-none rounded px-3 py-2 transition duration-300 max-w-md focus:outline-none placeholder:font-bold placeholder:text-sm focus:ring mt-1.5 bg-[#F1F1F1] focus:ring-(--main-color)"
             placeholder="Enter your Password"
+            name="password"
+            onChange={handleChange}
+            value={UserData.password}
+            required
           />
           <button
             type="Submit"

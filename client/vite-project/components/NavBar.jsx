@@ -1,10 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { GoHomeFill } from "react-icons/go";
 import { MdReportProblem } from "react-icons/md";
+import useUser from "../src/context/UserContext";
+import { FaUser } from "react-icons/fa";
+
 function NavBar() {
   // const [isLogin, setIsLogin] = useState(Boolean(localStorage.getItem('token')))
   const [isLogin, setIsLogin] = useState(false);
+  const {user,isLoading}=useUser()
+  if (isLoading) {
+    return (
+      <div className="h-16 flex items-center justify-center">
+        <div className="w-6 h-6 border-2 border-gray-300 border-t-black rounded-full animate-spin"></div>
+      </div>
+    );
+  }
   return (
     <>
       <nav className="w-screen  h-13 m-auto flex justify-between px-5 max-w-[1600px]">
@@ -24,7 +35,7 @@ function NavBar() {
               Home
             </span>
           </NavLink>
-          {isLogin ? (
+          {user ? (
             <NavLink to={"/ReportIssue"} className={({isActive})=>
             isActive 
             ? "text-[#541AA3] font-bold"
@@ -41,7 +52,7 @@ function NavBar() {
           )}
         </div>
         <div className="w-auto flex p-2 items-center mr-2">
-          {!isLogin ? (
+          {!user ? (
             <>
               <NavLink to={"/Login"} className={({isActive})=>
             isActive
@@ -65,7 +76,15 @@ function NavBar() {
 
             </>
           ) : (
-            <></>
+            <>
+            
+              <NavLink to={"/Profile"}>
+              <div className='bg-[#D2C5E8] rounded-3xl p-2 w-10 h-10 flex items-center justify-center'>
+              <FaUser />
+              </div>
+            </NavLink>
+            
+            </>
           )}
         </div>
       </nav>

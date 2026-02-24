@@ -4,6 +4,7 @@ import { BiError } from "react-icons/bi";
 import ReportIssuescroll from '../components/ReportIssuescroll';
 import HowItWorks from '../components/HowItWorks';
 import { FaAnglesRight } from "react-icons/fa6";
+import useUser from '../src/context/UserContext';
 function Home() {
   const cards = [
     { title: "Total Problems", count: 186 },
@@ -12,7 +13,15 @@ function Home() {
     { title: "Critical", count: 8 },
     { title: "New Reports", count: 19 },
   ];
+  const{isLoading}=useUser();
   
+  if (isLoading) {
+    return (
+      <div className="h-16 flex items-center justify-center">
+        <div className="w-6 h-6 border-2 border-gray-300 border-t-black rounded-full animate-spin"></div>
+      </div>
+    );
+  }
   
   
   return (

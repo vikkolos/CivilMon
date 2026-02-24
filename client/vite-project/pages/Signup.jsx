@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 function Signup() {
+  const navigate = useNavigate()
   const [userType,setUserType] = useState("citizen");
   const [UserData,setUserData] = useState({
     fullName:"",
@@ -10,19 +12,57 @@ function Signup() {
     password:"",
     aadharnumber:"",
   })
+  const [RepData,setRepData] = useState({
+    fullName:"",
+    email:"",
+    password:"",
+    aadharnumber:"",
+    state:"",
+    district:"",
+    wardnumber:"",
+  })
+
   const handleSubmit = async (e)=>{
-    e.preventDefault();
-    console.log(UserData)
-    const res = await axios.post("http://localhost:3002/api/v1/users/registerUser",UserData);
-    console.log(res)
+    e.preventDefault(); 
+   try {
+     let data = userType==="citizen"?UserData:RepData; 
+     const res = await axios.post("http://localhost:3002/api/v1/users/registerUser",UserData);
+     console.log(res);
+     navigate("/Login")
+
+   } catch (error) {
+      console.log(error)
+   }
+    userType ==="citizen"?setUserData({
+      fullName:"",
+      email:"",
+      password:"",
+      aadharnumber:"",
+    }):setUserData({
+      fullName:"",
+      email:"",
+      password:"",
+      aadharnumber:"",
+      state:"",
+      district:"",
+      wardnumber:"",
+    });
 
   }
  const handleChange =(e)=>{
   const {name, value} = e.target
-  setUserData(prev =>({
-    ...prev,
-    [name]:value
-  }))
+  if(userType=="citizen"){
+    setUserData(prev =>({
+      ...prev,
+      [name]:value
+    }))
+  }
+  else{
+    setRepData(prev=>({
+      ...prev,
+      [name]:value
+    }))
+  }
  }
 
   return (
@@ -48,6 +88,7 @@ function Signup() {
             name="fullName"
             onChange={handleChange}
             required
+            value={UserData.fullName}
           />
           <label htmlFor="mailman" className="block text-md font-medium mt-3 ">
             Email
@@ -60,6 +101,7 @@ function Signup() {
             name="email"
             onChange={handleChange}
             required
+            value={UserData.email}
           />
           <label htmlFor="passman" className="block text-md font-medium mt-3">
             Password
@@ -72,6 +114,7 @@ function Signup() {
             name="password"
             onChange={handleChange}
             required
+            value={UserData.password}
           />
           <label htmlFor="aadharman" className="block text-md font-medium mt-3">
             Aadhar-Number
@@ -85,6 +128,7 @@ function Signup() {
             name="aadharnumber"
             onChange={handleChange}
             required
+            value={UserData.aadharnumber}
           />
           {(userType=="representative")&&(
           <>
@@ -121,7 +165,6 @@ function Signup() {
           }
           <button
             type="Submit"
-           
             className="max-w-md w-full rounded-md bg-(--main-color) h-auto py-2 text-white  mt-7 text-center hover:cursor-pointer"
           >
             Create Account
