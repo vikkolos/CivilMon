@@ -4,14 +4,15 @@ import { BiError } from "react-icons/bi";
 import ReportIssuescroll from '../components/ReportIssuescroll';
 import HowItWorks from '../components/HowItWorks';
 import { FaAnglesRight } from "react-icons/fa6";
+import { TiTick } from "react-icons/ti";
 import useUser from '../src/context/UserContext';
 function Home() {
   const cards = [
-    { title: "Total Problems", count: 186 },
-    { title: "Pending Issues", count: 42 },
-    { title: "Resolved", count: 120 },
-    { title: "Critical", count: 8 },
-    { title: "New Reports", count: 19 },
+    { title: "Road" },
+    { title: "Waste" },
+    { title: "Electricity" },
+    { title: "Sewage" },
+    { title: "Others"},
   ];
   const{isLoading}=useUser();
   
@@ -45,15 +46,15 @@ function Home() {
                 <BiError size={35} className='text-(--main-color)'/>
               </div>
               <span className='text-2xl mt-2 font-semibold'>186</span>
-              <p className='mt-2 font-medium font-popp'>Total Problems</p>
+              <p className='mt-2 font-medium font-popp'>Total Issues</p>
 
             </div>
             <div className='w-[50%] bg-(--main-light) mt-4 h-55 rounded-lg flex items-center justify-center flex-col' >
               <div className='bg-[#D2C5E8] rounded-3xl p-2 w-12 h-12 flex items-center justify-center'>
-                <BiError size={35} className='text-(--main-color)'/>
+                <TiTick size={35} className='text-(--main-color)'/>
               </div>
-              <span className='text-2xl mt-2 font-semibold'>186</span>
-              <p className='mt-2 font-medium font-popp'>Total Problems</p>
+              <span className='text-2xl mt-2 font-semibold'>150</span>
+              <p className='mt-2 font-medium font-popp'>Resolved Issues</p>
 
             </div>   
           </div>

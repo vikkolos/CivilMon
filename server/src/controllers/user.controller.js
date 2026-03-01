@@ -3,6 +3,8 @@ import ApiError from "../utils/ApiError.js";
 import { User } from "../models/user.model.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import  jwt  from "jsonwebtoken";
+import { Issue } from "../models/issue.model.js";
+
 const generateAccessAndRefereshTokens = async(userId) =>{
     try {
         const user = await User.findById(userId)
@@ -111,4 +113,51 @@ const authorize = asyncHandler(async ( req,res)=>{
     },"User logged in successfully")
    )
 })
-export{loginUser,registerUser,authorize};
+const logoutUser = asyncHandler(async(req,res)=>{
+    await User.findByIdAndUpdate(req.user._id,{
+        $unset:{
+            refreshtoken:1,
+        }
+    },
+    {
+        new:true
+    }
+    )
+    const options = {
+        httpOnly:true,
+        secure:true
+    }
+    return res
+    .status(200)
+    .clearCookie("accessToken",options)
+    .clearCookie("refreshToken",options)
+    .json(new ApiResponse(200,{},"user logged out"))
+})
+const getResPenIssues = async(user)=>{ 
+    if(!user){
+        throw new ApiError(404,"user is not provided")
+    }
+    const resolvednum = await Issue.countDocuments({
+        _id: { $in: user.issues },
+        resolved: true
+      });
+
+      const unresolvednum = await Issue.countDocuments({
+        _id: { $in: user.issues },
+        resolved: false
+      });
+     return {resolvednum,unresolvednum}
+}
+const getUserProfile = asyncHandler(async(req,res)=>{
+    const user = await User.findById(req.user._id).populate("issues");
+    if(!user){
+        throw new ApiError(404,"User not found")
+    }
+    const{resolvednum,unresolvednum}= await getResPenIssues(user)
+    if(resolvednum===undefined||unresolvednum===undefined){
+        throw new ApiError(404,"No resolved num or unresolved num")
+    }
+    return res.status(200)
+    .json(new ApiResponse(200,{user,issues:user.issues,resolvednum,unresolvednum},"issues sent successfully"))
+})
+export{loginUser,registerUser,authorize,logoutUser,getUserProfile};

@@ -4,6 +4,7 @@ import { User } from "../models/user.model.js";
 import { Issue } from "../models/issue.model.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import uploadOnCloudinary from "../utils/cloudinary.js"
+import { Representative } from "../models/representative.modele.js";
 
 const reportIssue = asyncHandler( async (req,res)=>{
     //get data from front end
@@ -39,42 +40,32 @@ const reportIssue = asyncHandler( async (req,res)=>{
         urls[i] = resp.url
     }
     console.log(urls)
-    const user= req.user    
-    const issue = Issue.create({
+    const user= req.user
+    
+    // const repid = assignToRep(location.wardNumber);
+    const issue = await Issue.create({
         issueType,
         description,
         severity,
         location,
         owner:user._id,
-        images:urls
+        images:urls,
+        // assignedTo:repid,
     })
-
+    
+    const actualUser = await User.findByIdAndUpdate(
+        user._id,
+        {
+        $push:{issues:issue._id}
+        },
+        {
+        new:true
+        });
     return res
     .status(201)
-    .json( new ApiResponse(200,issue,"issue reported successfully"))
+    .json( new ApiResponse(200,{issue,actualUser},"issue reported successfully"))
     
 })
-const getResPenIssues = asyncHandler(async(req,res)=>{
-    const user = req.user;
-    let resolved = []
-    let unresolved = []
-
-    for(let i = 0 ; i<user.issue.length;i++){
-       let resp= await Issue.findById(element)
-       if(resp.resolved =="true"){
-        resolved.push(resp)
-       }
-       else{
-        unresolved.push(resp)
-       }
-    }
-     return res.status(200)
-     .json( new ApiResponse (200,{resolvednum:resolved.length,
-    unresolvednum:unresolved.length},"sent the number of  resolved and unresolved"))
-
-})
-
-
 const handleResolvedRating = asyncHandler(async ( req,res )=>{
     const {id,rating}= req.body;
     if(!id){
@@ -94,7 +85,28 @@ const handleResolvedRating = asyncHandler(async ( req,res )=>{
      .json( new ApiResponse(200,{},"issue set to resolved"))
 
 })
+const assignToRep = async(wardno)=>{
+    const rep = await Representative.findOne({wardNumber:wardno})
+     
+    if(!rep){
+        throw new ApiError(404,"cantfind representative")
+    }
 
+   return rep._id;
+}
+const markAsResolved = asyncHandler( async (req,res)=>{
+    const issue = await Issue.findByIdAndUpdate(req.body._id,{
+        resolved:true,
+    },
+    {new:true,runValidators:true})
+    if(!issue){
+        throw new ApiError(404,"Issue not found")
+    }
+})
 
-
-export {reportIssue,getResPenIssues,handleResolvedRating}
+export {
+        reportIssue,
+        
+        handleResolvedRating,
+        markAsResolved
+       }

@@ -72,10 +72,8 @@ function ReportIssuescroll({ cards }) {
               <div className="bg-[#D2C5E8] rounded-3xl w-12 h-12">
                 
               </div>
-              <span className="text-2xl mt-2 font-semibold">
-                {card.count}
-              </span>
-              <p className="font-medium font-popp">
+              
+              <p className="font-medium font-popp ml-1 mt-1">
                 {card.title}
               </p>
             </div>

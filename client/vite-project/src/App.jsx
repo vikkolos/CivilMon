@@ -9,6 +9,7 @@ import './App.css'
 import ReportIssue from '../pages/ReportIssue'
 import UserContextProvider from './context/UserContextProvider.jsx'
 import Protected from './Protected'
+import RepProfile from '../pages/RepProfile'
 
 function App() {
  
@@ -24,6 +25,7 @@ function App() {
         <ReportIssue/>
       </Protected>} />
       <Route path='/Profile' element={<Profile/>}/>
+      <Route path='/RepProfile' element={<RepProfile/>}/>
      </Routes>     
     </UserContextProvider>
    )

@@ -4,9 +4,11 @@ import { GoHomeFill } from "react-icons/go";
 import { MdReportProblem } from "react-icons/md";
 import useUser from "../src/context/UserContext";
 import { FaUser } from "react-icons/fa";
-
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 function NavBar() {
   // const [isLogin, setIsLogin] = useState(Boolean(localStorage.getItem('token')))
+  const navigate = useNavigate()
   const [isLogin, setIsLogin] = useState(false);
   const {user,isLoading}=useUser()
   if (isLoading) {
@@ -16,6 +18,12 @@ function NavBar() {
       </div>
     );
   }
+  const handleLogout =async()=>{
+    const res = await axios.get("http://localhost:3002/api/v1/users/Logout",{withCredentials:true});
+    // navigate("/Login")
+    window.location.reload();
+  }
+  
   return (
     <>
       <nav className="w-screen  h-13 m-auto flex justify-between px-5 max-w-[1600px]">
@@ -79,10 +87,17 @@ function NavBar() {
             <>
             
               <NavLink to={"/Profile"}>
-              <div className='bg-[#D2C5E8] rounded-3xl p-2 w-10 h-10 flex items-center justify-center'>
-              <FaUser />
+              <div className='bg-[#D2C5E8] rounded-3xl p-2 w-10 h-10 flex items-center justify-center mx-3'>
+                <button >
+                <FaUser />
+                </button>
               </div>
-            </NavLink>
+              </NavLink>
+              <div className="flex justify-center items-center bg-(--main-light) rounded-lg font-semibold text-(--main-color) hover:cursor-pointer">
+              <button className="px-5 py-2 " onClick={handleLogout}>
+                  Log Out
+              </button>
+              </div>
             
             </>
           )}

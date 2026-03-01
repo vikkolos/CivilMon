@@ -60,7 +60,15 @@ const reportIssue = new Schema({
         type: Number,
         min :1 ,
         max: [10, " rating must be less than or equal to 10"]
-      }
+      },
+    status :{
+        type :String,
+        default:"unresolved"
+    },
+    assignedTo:{
+        type:Schema.Types.ObjectId,
+        ref:"Representative"
+    }
 },{
     timestamps:true
 })
