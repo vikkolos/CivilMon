@@ -103,7 +103,6 @@ const markAsResolved = asyncHandler( async (req,res)=>{
         throw new ApiError(404,"Issue not found")
     }
 })
-
 export {
         reportIssue,
         

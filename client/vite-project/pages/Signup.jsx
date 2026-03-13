@@ -26,7 +26,13 @@ function Signup() {
     e.preventDefault(); 
    try {
      let data = userType==="citizen"?UserData:RepData; 
-     const res = await axios.post("http://localhost:3002/api/v1/users/registerUser",UserData);
+     let res;
+     if(userType==="citizen"){
+      res = await axios.post("http://localhost:3002/api/v1/users/registerUser",UserData);
+      }
+      else{
+       res = await axios.post("http://localhost:3002/api/v1/rep/registerRep",RepData);
+      }
      console.log(res);
      navigate("/Login")
 
@@ -88,7 +94,7 @@ function Signup() {
             name="fullName"
             onChange={handleChange}
             required
-            value={UserData.fullName}
+            value={userType==="citizen" ?UserData.fullName:RepData.fullName}
           />
           <label htmlFor="mailman" className="block text-md font-medium mt-3 ">
             Email
@@ -101,7 +107,7 @@ function Signup() {
             name="email"
             onChange={handleChange}
             required
-            value={UserData.email}
+            value={userType==="citizen" ?UserData.email:RepData.email}
           />
           <label htmlFor="passman" className="block text-md font-medium mt-3">
             Password
@@ -114,13 +120,13 @@ function Signup() {
             name="password"
             onChange={handleChange}
             required
-            value={UserData.password}
+            value={userType==="citizen" ?UserData.password:RepData.password}
           />
           <label htmlFor="aadharman" className="block text-md font-medium mt-3">
             Aadhar-Number
           </label>
           <input
-            type="password"
+            type="String"
             id="aadharman"
             className="w-full border-none rounded px-3 py-2 transition duration-300 max-w-md focus:outline-none placeholder:font-bold placeholder:text-sm focus:ring mt-1.5 bg-[#F1F1F1] focus:ring-(--main-color)
             placeholder:tracking-widest"
@@ -128,7 +134,7 @@ function Signup() {
             name="aadharnumber"
             onChange={handleChange}
             required
-            value={UserData.aadharnumber}
+            value={userType==="citizen" ?UserData.aadharnumber:RepData.aadharnumber}
           />
           {(userType=="representative")&&(
           <>
@@ -136,28 +142,37 @@ function Signup() {
             State
             </label>
             <input
-              type="password"
+              type="String"
               id="aadharman"
               className="w-full border-none rounded px-3 py-2 transition duration-300 max-w-md focus:outline-none placeholder:font-bold placeholder:text-sm focus:ring mt-1.5 bg-[#F1F1F1] focus:ring-(--main-color)"
               placeholder="Enter State"
+              onChange={handleChange}
+              name="state"
+              value={RepData.state}
             />
             <label htmlFor="aadharman" className="block text-md font-medium mt-3">
             District
             </label>
             <input
-              type="password"
+              type="String"
               id="aadharman"
               className="w-full border-none rounded px-3 py-2 transition duration-300 max-w-md focus:outline-none placeholder:font-bold placeholder:text-sm focus:ring mt-1.5 bg-[#F1F1F1] focus:ring-(--main-color)"
               placeholder="Enter District"
+              onChange={handleChange}
+              name="district"
+              value={RepData.district}
             />
             <label htmlFor="aadharman" className="block text-md font-medium mt-3">
             Ward-Number
             </label>
             <input
-              type="password"
+              type="String"
               id="aadharman"
               className="w-full border-none rounded px-3 py-2 transition duration-300 max-w-md focus:outline-none placeholder:font-bold placeholder:text-sm focus:ring mt-1.5 bg-[#F1F1F1] focus:ring-(--main-color)"
               placeholder="Enter Ward-Number"
+              onChange={handleChange}
+              name="wardnumber"
+              value={RepData.wardnumber}
             />
           </> 
           )

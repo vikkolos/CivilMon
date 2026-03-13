@@ -10,11 +10,12 @@ import ReportIssue from '../pages/ReportIssue'
 import UserContextProvider from './context/UserContextProvider.jsx'
 import Protected from './Protected'
 import RepProfile from '../pages/RepProfile'
-
+import RolecontextProvider from './context/RolecontextProvider'
 function App() {
  
 
-  return (
+  return (  
+  <RolecontextProvider>
     <UserContextProvider>
      <NavBar/>
      <Routes>
@@ -28,6 +29,7 @@ function App() {
       <Route path='/RepProfile' element={<RepProfile/>}/>
      </Routes>     
     </UserContextProvider>
+    </RolecontextProvider>
    )
 }
 

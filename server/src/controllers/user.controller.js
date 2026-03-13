@@ -4,10 +4,13 @@ import { User } from "../models/user.model.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import  jwt  from "jsonwebtoken";
 import { Issue } from "../models/issue.model.js";
-
+import { Representative } from "../models/representative.modele.js";
 const generateAccessAndRefereshTokens = async(userId) =>{
     try {
-        const user = await User.findById(userId)
+        let user = await User.findById(userId)
+        if(!user){
+            user = await Representative.findById(userId)
+        }
         const accessToken = user.generateAccessToken()
         const refreshToken = user.generateRefreshToken()
 
@@ -56,9 +59,13 @@ const loginUser = asyncHandler(async (req,res)=>{
     if(!email || !password){
         throw new ApiError(400,"email and passwod are required")
     }
-    const user = await User.findOne({
+    let user = await User.findOne({
         $or:[{email}]
     })
+    if(!user){
+        user = await Representative.findOne({email})
+        console.log(user)
+    }
     if(!user){
         throw new ApiError(404,"user does not exist");
     }
@@ -67,7 +74,10 @@ const loginUser = asyncHandler(async (req,res)=>{
         throw new ApiError(401,"invalid user credentials")
     }
     const {accessToken,refreshToken}= await generateAccessAndRefereshTokens(user._id);
-    const loggedInUser = await User.findById(user._id).select("-password -refreshToken")
+    let loggedInUser = await User.findById(user._id).select("-password -refreshToken")
+    if(!loggedInUser){
+        loggedInUser = await Representative.findById(user._id).select("-pasword -refreshToken")
+    }
     const options ={
         httpOnly :true,
         secure :false,

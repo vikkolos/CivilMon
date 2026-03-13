@@ -1,8 +1,39 @@
-import React from 'react'
+
+import React, { useEffect, useState } from 'react'
 import { BiError } from "react-icons/bi";
 import { FaUser } from "react-icons/fa";
 import { NavLink, Link, useNavigate } from "react-router-dom";
+import useUser from '../src/context/UserContext';
+
+
+import axios from 'axios';
 function RepProfile() {
+  const [name,setName]=useState("Rahul HR")
+    const [year,setYear]=useState("2026")
+    const [mail,setMail]=useState("vikas@gmail.com")
+    const  [resolvedIssues,setResolvedIssues] =useState([]);
+    const [activeIssues,setActiveIsssues ]=useState([]);
+    const {user,isLoading,setUser}= useUser()
+    useEffect(()=>
+      {
+        if(!isLoading){
+          setName(user.fullname)
+          setMail(user.email)
+        }
+        
+      },[isLoading,user])
+      useEffect(()=>{
+        async function fetchdata(){
+          const res = await axios.get("http://localhost:3002/api/v1/rep/profile",{withCredentials:true});
+         await setUser(res.data.data.rep)
+          console.log(res)
+         const resolvedIssue = user.issues.filter(issue => issue.resolved === true);
+          const activeIssue = user.issues.filter(issue => issue.resolved === false);
+          setActiveIsssues(activeIssue)
+          setResolvedIssues(resolvedIssue)
+         }
+        fetchdata()
+      },[isLoading])
   return (
     
         <div className='max-w-[1300px] mx-auto font-popp flex flex-col w-full pb=40 mt-5 px-4'>

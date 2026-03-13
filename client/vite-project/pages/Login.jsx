@@ -4,11 +4,13 @@ import { useState } from "react";
 import axios from "axios";
 import useUser from "../src/context/UserContext";
 import { useNavigate } from "react-router-dom";
+import useRole from "../src/context/RoleCOntext";
 function Login() {
   const [UserData,setUserData] = useState({
     email:"",
     password:"",
   })
+  const {Role,setRole}=useRole()
   const{user,setUser,isLoading,setIsLoading}=useUser();
   const navigate = useNavigate();
   const handleChange =(e)=>{
@@ -28,6 +30,9 @@ function Login() {
     })
     // console.log(res.data)
     setUser(res.data.data.user)
+    if(user.wardnumber){
+      setRole("representative");
+    }
     console.log(user)
 
     navigate("/")
