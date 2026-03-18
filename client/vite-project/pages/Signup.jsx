@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
+import useRole from "../src/context/RoleCOntext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 function Signup() {
   const navigate = useNavigate()
+  const { setRole } = useRole();
   const [userType,setUserType] = useState("citizen");
   const [UserData,setUserData] = useState({
     fullName:"",
@@ -80,8 +81,8 @@ function Signup() {
             Join our community to report and track local issues
           </span>
           <div className="flex gap-5">
-            <button type="button" className={`m-1 px-4 py-0.5 text-center rounded-lg  font-medium pb-1 ${userType=="citizen"?"bg-(--main-color) text-white":"bg-(--but-bg-na)"}`}  onClick={() => setUserType("citizen")}>Citizen</button>
-            <button type="button" className={`m-1 px-4 py-0.5 text-center rounded-lg  font-medium pb-1 ${userType=="representative"?"bg-(--main-color) text-white":"bg-(--but-bg-na)"}`}  onClick={() => setUserType("representative")}>Representative</button>           
+            <button type="button" className={`m-1 px-4 py-0.5 text-center rounded-lg  font-medium pb-1 ${userType=="citizen"?"bg-(--main-color) text-white":"bg-(--but-bg-na)"}`}  onClick={() =>{ setUserType("citizen");setRole("citizen")}}>Citizen</button>
+            <button type="button" className={`m-1 px-4 py-0.5 text-center rounded-lg  font-medium pb-1 ${userType=="representative"?"bg-(--main-color) text-white":"bg-(--but-bg-na)"}`}  onClick={() =>{ setUserType("representative");setRole("representative")}}>Representative</button>           
           </div>
           <label htmlFor="nameman" className="block text-md font-medium mt-3">
             Full name

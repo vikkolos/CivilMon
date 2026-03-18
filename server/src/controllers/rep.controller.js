@@ -5,22 +5,26 @@ import  jwt  from "jsonwebtoken";
 import { Issue } from "../models/issue.model.js";
 import {Representative} from "../models/representative.modele.js"
 
-const generateAccessAndRefereshTokens = async(userId) =>{
+const generateAccessAndRefereshTokens = async (userId) => {
     try {
-        const user = await User.findById(userId)
-        const accessToken = user.generateAccessToken()
-        const refreshToken = user.generateRefreshToken()
-
-        user.refreshtoken = refreshToken
-        await user.save({ validateBeforeSave: false })
-
-        return {accessToken, refreshToken}
-
-
+  
+      const user = await Representative.findById(userId)
+  
+      const accessToken = user.generateAccessToken()
+      const refreshToken = user.generateRefreshToken()
+  
+      user.refreshtoken = refreshToken
+      await user.save({ validateBeforeSave: false })
+  
+      return { accessToken, refreshToken }
+  
     } catch (error) {
-        throw new ApiError(500, "Something went wrong while generating referesh and access token")
+      throw new ApiError(
+        500,
+        "Something went wrong while generating refresh and access token"
+      )
     }
-}
+  }
 const registerRep = asyncHandler(async (req,res)=>{
     const {fullName,email,password,aadharnumber,state,district,wardnumber}=req.body;
     if(
@@ -68,7 +72,7 @@ const loginRep = asyncHandler(async (req,res)=>{
     const loggedInRep = await Representative.findById(rep._id).select("-password -refreshToken")
     const options ={
         httpOnly :true,
-        secure :false,
+        secure :true,
         sameSite: "lax" 
     }
     console.log("logged in")

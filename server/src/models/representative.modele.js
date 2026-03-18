@@ -4,39 +4,39 @@ import bcrypt from "bcrypt"
 const representativeSchema = new Schema({
     fullname: {
       type: String,
-      require: true,
+      required: true,
       trim: true,
     },
     email: {
       type: String,
-      require: true,
+      required: true,
       trim: true,
       unique: true,
       index: true,
     },
     password: {
       type: String,
-      require: true,
+      required: true,
     },
     refreshtoken: {
       type: String,
     },
     aadharnumber: {
       type: String,
-      require: true,
+      required: true,
       match: [/^\d{12}$/, "Aadhaar number must be exactly 12 digits"],
     },
     state: {
       type: String,
-      require: true,
+      required: true,
     },
     district: {
       type: String,
-      require: true,  
+      required: true,  
     },
     wardnumber: {
       type: String,
-      require: true,
+      required: true,
     },
     issues:[{
       type:Schema.Types.ObjectId,
@@ -83,4 +83,4 @@ representativeSchema.methods.generateAccessToken =  function(){
     },
     )
 }
-export const Representative = mongoose.model("Respresentative",representativeSchema)
+export const Representative = mongoose.model("Representative",representativeSchema)

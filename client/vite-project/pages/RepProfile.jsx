@@ -35,15 +35,14 @@ function RepProfile() {
         fetchdata()
       },[isLoading])
   return (
-    
         <div className='max-w-[1300px] mx-auto font-popp flex flex-col w-full pb=40 mt-5 px-4'>
             <div className='flex flex-col w w-full gap-3'>
               <div className=' bg-(--main-light) rounded-lg h-auto p-14 px-12 w-full'>
                 <div className='w-14 h-14 rounded-full bg-(--main-accent) justify-center items-center flex'><FaUser size={23} className='text-(--main-color)'/></div>
-                <h2 className='font-bold text-lg mt-4'>Vikram Kumar</h2>
+                <h2 className='font-bold text-lg mt-4'>{user.fullname}</h2>
                 <p className='text-[0.8em] font-medium'> Member since </p>
-                <p className='text-[0.8em] font-medium'> State : Bihar </p>
-                <p className='text-[0.8em] font-medium'> District : Kaimur  <br /> WardNumber:144 </p>
+                <p className='text-[0.8em] font-medium'> State : {user.state} </p>
+                <p className='text-[0.8em] font-medium'> District : {user.district}  <br /> WardNumber:{user.wardnumber} </p>
                 <button className='mt-3 px-4 py-1.5 rounded-lg bg-(--main-accent) text-sm text-(--main-color) font-semibold hover:cursor-pointer'>Contact Representative</button>
               </div>
               <div className=' bg-(--main-light) rounded-lg h-auto p-7 px-12  w-full'>
