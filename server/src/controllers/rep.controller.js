@@ -150,6 +150,7 @@ const getResPenIssues = async(user)=>{
 }
 const getRepProfile = asyncHandler(async(req,res)=>{
     const rep = await Representative.findById(req.user._id).populate("issues");
+
     if(!rep){
         throw new ApiError(404,"User not found")
     }

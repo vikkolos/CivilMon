@@ -42,7 +42,7 @@ const reportIssue = asyncHandler( async (req,res)=>{
     console.log(urls)
     const user= req.user
     
-    // const repid = assignToRep(location.wardNumber);
+    const repid = await assignToRep(location.wardNumber);
     const issue = await Issue.create({
         issueType,
         description,
@@ -50,9 +50,15 @@ const reportIssue = asyncHandler( async (req,res)=>{
         location,
         owner:user._id,
         images:urls,
-        // assignedTo:repid,
+        assignedTo:repid,
     })
-    
+    await Representative.findByIdAndUpdate(
+        repid,
+        {
+            $push: { issues: issue._id }
+        },
+        { new: true }
+    )
     const actualUser = await User.findByIdAndUpdate(
         user._id,
         {
@@ -86,23 +92,37 @@ const handleResolvedRating = asyncHandler(async ( req,res )=>{
 
 })
 const assignToRep = async(wardno)=>{
-    const rep = await Representative.findOne({wardNumber:wardno})
+    console.log("Ward number:", wardno)
+    const rep = await Representative.findOne({ wardnumber: wardno })
      
     if(!rep){
         throw new ApiError(404,"cantfind representative")
     }
-
+    console.log(rep._id)
    return rep._id;
 }
-const markAsResolved = asyncHandler( async (req,res)=>{
-    const issue = await Issue.findByIdAndUpdate(req.body._id,{
-        resolved:true,
-    },
-    {new:true,runValidators:true})
-    if(!issue){
-        throw new ApiError(404,"Issue not found")
+const markAsResolved = asyncHandler(async (req, res) => {
+
+    const issue = await Issue.findByIdAndUpdate(
+      req.params.id,
+      {
+        resolved: true
+      },
+      {
+        new: true,
+        runValidators: true
+      }
+    );
+  
+    if (!issue) {
+      throw new ApiError(404, "Issue not found");
     }
-})
+  
+    return res.status(200).json(
+      new ApiResponse(200, issue, "Issue marked as resolved")
+    );
+  
+  });
 export {
         reportIssue,
         
