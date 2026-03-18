@@ -30,6 +30,7 @@ function Login() {
       let res;
 
       try {
+        console.log("Trying citizen login")
         // Try citizen login first
         res = await axios.post(
           "http://localhost:3002/api/v1/users/login",
@@ -42,6 +43,7 @@ function Login() {
 
       } catch (err) {
         // If citizen login fails → try representative login
+        console.log("calling rep")
         res = await axios.post(
           "http://localhost:3002/api/v1/rep/login",
           UserData,
@@ -50,7 +52,7 @@ function Login() {
 
         setRole("representative");
         localStorage.setItem("role", "representative");
-        console.log("Role in context:", Role)
+        // console.log("Role in context:", Role)
         console.log("Role in storage:", localStorage.getItem("role"))
       }
 

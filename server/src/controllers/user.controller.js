@@ -63,10 +63,6 @@ const loginUser = asyncHandler(async (req,res)=>{
         $or:[{email}]
     })
     if(!user){
-        user = await Representative.findOne({email})
-        console.log(user)
-    }
-    if(!user){
         throw new ApiError(404,"user does not exist");
     }
     const isParrwordValid= await user.isPasswordCorrect(password);
@@ -75,9 +71,6 @@ const loginUser = asyncHandler(async (req,res)=>{
     }
     const {accessToken,refreshToken}= await generateAccessAndRefereshTokens(user._id);
     let loggedInUser = await User.findById(user._id).select("-password -refreshToken")
-    if(!loggedInUser){
-        loggedInUser = await Representative.findById(user._id).select("-pasword -refreshToken")
-    }
     const options ={
         httpOnly :true,
         secure :false,
