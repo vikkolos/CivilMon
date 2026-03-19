@@ -33,7 +33,7 @@ function Login() {
         console.log("Trying citizen login")
         // Try citizen login first
         res = await axios.post(
-          "https://civil-mon.vercel.app/api/v1/users/login",
+          "https://civil-mon.vercel.app/api/v1/user/login",
           UserData,
           { withCredentials: true }
         );
