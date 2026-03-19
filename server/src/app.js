@@ -16,7 +16,7 @@ app.use(cookieParser())
 import userRouter from "./routes/user.router.js";
 import issueRouter from "./routes/issue.router.js"
 import repRouter from "./routes/representative.router.js"
-app.use("/api/v1s/user",userRouter)
+app.use("/api/v1/user",userRouter)
 app.use("/api/v1/issues",issueRouter)
 app.use("/api/v1/rep",repRouter)
 
