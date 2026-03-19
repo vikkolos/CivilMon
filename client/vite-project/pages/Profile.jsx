@@ -22,7 +22,7 @@ function Profile() {
     },[isLoading,user])
     useEffect(()=>{
       async function fetchdata(){
-        const res = await axios.get("http://localhost:3002/api/v1/users/profile",{withCredentials:true});
+        const res = await axios.get("https://civil-mon.vercel.app/api/v1/users/profile",{withCredentials:true});
        await setUser(res.data.data.user)
         console.log(res)
        const resolvedIssue = user.issues.filter(issue => issue.resolved === true);

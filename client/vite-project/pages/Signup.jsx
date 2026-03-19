@@ -29,10 +29,10 @@ function Signup() {
      let data = userType==="citizen"?UserData:RepData; 
      let res;
      if(userType==="citizen"){
-      res = await axios.post("http://localhost:3002/api/v1/users/registerUser",UserData);
+      res = await axios.post("https://civil-mon.vercel.app/api/v1/users/registerUser",UserData);
       }
       else{
-       res = await axios.post("http://localhost:3002/api/v1/rep/registerRep",RepData);
+       res = await axios.post("https://civil-mon.vercel.app/api/v1/rep/registerRep",RepData);
       }
      console.log(res);
      navigate("/Login")

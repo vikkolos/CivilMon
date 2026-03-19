@@ -93,7 +93,7 @@ const handleSubmit = async (e) => {
     });
     
     console.log(data)
-    const res = await axios.post("http://localhost:3002/api/v1/issues/report",data,{withCredentials:true});
+    const res = await axios.post("https://civil-mon.vercel.app/api/v1/issues/report",data,{withCredentials:true});
     console.log(res.data)
     setFormData({
       issueType:"",

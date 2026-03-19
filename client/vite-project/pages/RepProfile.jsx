@@ -18,7 +18,7 @@ function RepProfile() {
       try {
 
         const res = await axios.get(
-          "http://localhost:3002/api/v1/rep/profile",
+          "https://civil-mon.vercel.app/api/v1/rep/profile",
           { withCredentials: true }
         );
 
@@ -48,7 +48,7 @@ function RepProfile() {
     try {
 
       await axios.patch(
-        `http://localhost:3002/api/v1/issues/resolve/${id}`,
+        `https://civil-mon.vercel.app/api/v1/issues/resolve/${id}`,
         {},
         { withCredentials: true }
       );
@@ -69,7 +69,7 @@ function RepProfile() {
     try {
 
       await axios.patch(
-        "http://localhost:3002/api/v1/issues/progress",
+        "https://civil-mon.vercel.app/api/v1/issues/progress",
         { _id: id },
         { withCredentials: true }
       );

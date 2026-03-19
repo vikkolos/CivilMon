@@ -24,7 +24,7 @@ function UserContextProvider({ children }) {
         if (role === "citizen") {
 
           const res = await axios.get(
-            "http://localhost:3002/api/v1/users/me",
+            "https://civil-mon.vercel.app/api/v1/users/me",
             { withCredentials: true }
           );
 
@@ -33,7 +33,7 @@ function UserContextProvider({ children }) {
         } else {
 
           const res = await axios.get(
-            "http://localhost:3002/api/v1/rep/me",
+            "https://civil-mon.vercel.app/api/v1/rep/me",
             { withCredentials: true }
           );
           console.log(res)

@@ -33,7 +33,7 @@ function Login() {
         console.log("Trying citizen login")
         // Try citizen login first
         res = await axios.post(
-          "http://localhost:3002/api/v1/users/login",
+          "https://civil-mon.vercel.app/api/v1/users/login",
           UserData,
           { withCredentials: true }
         );
@@ -45,7 +45,7 @@ function Login() {
         // If citizen login fails → try representative login
         console.log("calling rep")
         res = await axios.post(
-          "http://localhost:3002/api/v1/rep/login",
+          "https://civil-mon.vercel.app/api/v1/rep/login",
           UserData,
           { withCredentials: true }
         );
